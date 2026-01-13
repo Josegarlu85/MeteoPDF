@@ -1,0 +1,113 @@
+﻿<ContentPage
+    x:Class="MeteoPDF.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Grid>
+
+        <!-- Imagen de fondo -->
+        <Image Source="weather.jpg"
+               Aspect="AspectFill"
+               Opacity="0.35"
+               Grid.Row="0" />
+
+        <!-- Contenido encima -->
+        <ScrollView>
+            <VerticalStackLayout Padding="20" Spacing="20">
+
+                <Label Text="MeteoPDF"
+                       FontSize="28"
+                       TextColor="Black"
+                       HorizontalOptions="Center" />
+
+                <Label Text="Torrejon de Ardoz"
+                        FontSize="24"
+                         TextColor="Black"
+                         HorizontalOptions="Center" />
+
+                <Button Text="Obtener datos del clima"
+                        x:Name="BtnGetWeather"
+                        Clicked="BtnGetWeather_Clicked" />
+
+                <Button Text="Generar PDF"
+                        x:Name="BtnGeneratePdf"
+                        IsEnabled="False"
+                        Clicked="BtnGeneratePdf_Clicked" />
+
+                <Label x:Name="LblStatus"
+                       FontSize="16"
+                       TextColor="Black" />
+                <Frame BackgroundColor="#CCFFFFFF"
+       Padding="0"
+       CornerRadius="10"
+       HasShadow="False">
+
+                    <VerticalStackLayout Spacing="0">
+
+                        <!-- Fila de cabecera -->
+                        <Grid Padding="10" BackgroundColor="#EEEEEE">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Text="Hora"
+                   FontAttributes="Bold"
+                   TextColor="Black"
+                   Grid.Column="0" />
+
+                            <Label Text="Temp (°C)"
+                   FontAttributes="Bold"
+                   TextColor="Black"
+                   HorizontalTextAlignment="End"
+                   Grid.Column="1" />
+
+                            <Label Text="Lluvia (%)"
+                   FontAttributes="Bold"
+                   TextColor="Black"
+                   HorizontalTextAlignment="End"
+                   Grid.Column="2" />
+                        </Grid>
+
+                        <!-- Lista de datos -->
+                        <CollectionView x:Name="WeatherList"
+                        ItemsSource="{Binding WeatherItems}"
+                        HeightRequest="400">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*" />
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="1*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label Text="{Binding Hora}"
+                               TextColor="Black"
+                               Grid.Column="0" />
+
+                                        <Label Text="{Binding Temperatura}"
+                               TextColor="Black"
+                               Grid.Column="1"
+                               HorizontalTextAlignment="End" />
+
+                                        <Label Text="{Binding ProbabilidadLluvia}"
+                               TextColor="Black"
+                               Grid.Column="2"
+                               HorizontalTextAlignment="End" />
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                    </VerticalStackLayout>
+                </Frame>
+
+
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>

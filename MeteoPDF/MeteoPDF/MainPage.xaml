@@ -5,7 +5,7 @@
 
     <Grid>
 
-        <!-- Imagen de fondo -->
+        <!-- Imagen de fondo necesito el grid para ponerla de fondo con otras cosas encima-->
         <Image Source="weather.jpg"
                Aspect="AspectFill"
                Opacity="0.35"
@@ -70,7 +70,7 @@
                    Grid.Column="2" />
                         </Grid>
 
-                        <!-- Lista de datos -->
+                        <!-- Lista que mostrara los datos del tiempo -->
                         <CollectionView x:Name="WeatherList"
                         ItemsSource="{Binding WeatherItems}"
                         HeightRequest="400">

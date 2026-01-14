@@ -13,18 +13,20 @@ namespace MeteoPDF.Pdf
 {
     public class PdfGenerator
     {
+        //Guarda los datos del tiempo 
         private WeatherResponse _data;
-
+        //Constructor que recibe los datos del tiempo
         public PdfGenerator(WeatherResponse data)
         {
             _data = data;
         }
-
+        //metodo que generara el pdf y lo devuelve en un array de bytes
         public byte[] Generate()
-        {
+        {   //crea el documento pdf, usa metdos de questpdf
             IDocument document = Document.Create(
                 delegate (IDocumentContainer container)
                 {
+                    //a partir de aqui define como sera la pagina
                     container.Page(
                         delegate (PageDescriptor page)
                         {
@@ -37,11 +39,11 @@ namespace MeteoPDF.Pdf
                                     column.Item().Text("Previsión para los próximos 7 días en Torrejón de Ardoz (Madrid)").FontSize(16);
                                     column.Item().Text($"Datos obtenidos de Open‑Meteo el {DateTime.Now:dd/MM/yyyy} a las {DateTime.Now:HH:mm}").FontSize(12).Italic();
                                     column.Item().Text("");
-
+                                    //crea la tabla que mostrara los datos
                                     column.Item().Table(
                                         delegate (TableDescriptor table)
                                         {
-                                            // Definición de columnas
+                                            // Definición de columnas, una por cada dato
                                             table.ColumnsDefinition(
                                                 delegate (TableColumnsDefinitionDescriptor columns)
                                                 {
@@ -50,18 +52,19 @@ namespace MeteoPDF.Pdf
                                                     columns.RelativeColumn(); // Probabilidad lluvia
                                                 });
 
-                                            // Fila de cabecera
+                                            // Fila con los titulos de cabecera
                                             table.Cell().Element(CellStyle).Text("Hora");
                                             table.Cell().Element(CellStyle).Text("Temp (°C)");
                                             table.Cell().Element(CellStyle).Text("Lluvia (%)");
 
-                                            // Filas de datos
+
                                             if (_data != null &&
                                                 _data.hourly != null &&
                                                 _data.hourly.time != null &&
                                                 _data.hourly.temperature_2m != null &&
                                                 _data.hourly.precipitation_probability != null)
                                             {
+                                                //Cuantas filas se mostraran
                                                 int count = Math.Min(
                                                     _data.hourly.time.Count,
                                                     Math.Min(
@@ -69,7 +72,7 @@ namespace MeteoPDF.Pdf
                                                         _data.hourly.precipitation_probability.Count
                                                     )
                                                 );
-
+                                                //Bucle que va añadiendo las filas con los datos a la tabla
                                                 for (int i = 0; i < count; i++)
                                                 {
                                                     table.Cell().Element(CellStyle).Text(_data.hourly.time[i]);
@@ -84,7 +87,7 @@ namespace MeteoPDF.Pdf
 
             return document.GeneratePdf();
         }
-
+        //metodo para aplicar un estilo uniforme
         private QuestContainer CellStyle(QuestContainer container)
         {
             return container
@@ -94,3 +97,4 @@ namespace MeteoPDF.Pdf
         }
     }
 }
+

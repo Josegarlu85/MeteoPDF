@@ -6,6 +6,7 @@ namespace MeteoPDF
     {
         public static MauiApp CreateMauiApp()
         {
+            //Indica que tipo de licencia usare a QuestPDF
             QuestPDF.Settings.License = LicenseType.Community;
 
             var builder = MauiApp.CreateBuilder();

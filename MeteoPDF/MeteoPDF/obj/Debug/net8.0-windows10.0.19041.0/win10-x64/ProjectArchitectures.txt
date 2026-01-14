@@ -1,0 +1,1 @@
+C:\Users\zaola\source\repos\MeteoPDF\MeteoPDF\MeteoPDF.csproj;x64
